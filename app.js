@@ -26,7 +26,9 @@ app.get('/api/auth', async(req, res, next)=> {
 
 app.get('/api/users/:id/notes', async(req, res, next) => {
   try {
-    res.send(await User.getNotes(req.params.id))
+    console.log('printing req.headers: ', req.headers.authorization)
+    const user = await User.byToken(req.headers.authorization)
+    res.send(await user.getNotes());
   }
   catch (e) {
     next(e)

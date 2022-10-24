@@ -75,7 +75,12 @@
                 authorization: token
               }
             });
-            const usersNotes = await axios.get(`/api/users/${response.data.id}/notes`)
+            console.log('printing response: ', response)
+            const usersNotes = await axios.get(`/api/users/${response.data.id}/notes`, {
+              headers: {
+                authorization: token
+              }
+            })
             this.setState({ auth: response.data, notes: usersNotes.data });
           }
         }

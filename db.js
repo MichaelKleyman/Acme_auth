@@ -30,7 +30,7 @@ User.byToken = async (token) => {
   try {
     const payload = JWT.verify(token, process.env.JWT);
     const user = await User.findByPk(payload.id);
-    if (user) {
+    if (user.id === payload.id) {
       return user;
     }
     const error = Error("bad credentials");
@@ -61,15 +61,15 @@ User.authenticate = async ({ username, password }) => {
   throw error;
 };
 
-User.getNotes = async (id) => {
-  const user = await User.findByPk(id);
-  if (user) {
-    return user.getNotes();
-  }
-  const error = Error("Cant get notes");
-  error.status = 401;
-  throw error;
-};
+// User.getNotes = async (id) => {
+//   const user = await User.findByPk(id);
+//   if (user) {
+//     return user.getNotes();
+//   }
+//   const error = Error("Cant get notes");
+//   error.status = 401;
+//   throw error;
+// };
 
 const syncAndSeed = async () => {
   await conn.sync({ force: true });
