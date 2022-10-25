@@ -53,7 +53,7 @@ User.authenticate = async ({ username, password }) => {
       username,
     },
   });
-  if (user) {
+  if (user && await bcrypt.compare(password, user.password)) {
     return JWT.sign({ id: user.id }, process.env.JWT);
   }
   const error = Error("bad credentials");
