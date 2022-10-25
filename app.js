@@ -26,7 +26,6 @@ app.get('/api/auth', async(req, res, next)=> {
 
 app.get('/api/users/:id/notes', async(req, res, next) => {
   try {
-    console.log('printing req.headers: ', req.headers.authorization)
     const user = await User.byToken(req.headers.authorization)
     res.send(await user.getNotes());
   }
